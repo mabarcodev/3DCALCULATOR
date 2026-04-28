@@ -21,7 +21,7 @@ Precio = (Material + Desperdicio + Máquina + M. obra) × (1 + Margen%)
 
 ## Demo
 
-🔗 **[3dcalc.vercel.app](https://3dcalc.vercel.app)**
+🔗 **[3dcalc.vercel.app](https://3dcal.vercel.app)**
 
 ---
 
