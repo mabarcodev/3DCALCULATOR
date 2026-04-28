@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { calculate, DEFAULTS, PRESETS, fmt2, fmtCurrency, type CalcInputs, type CurrencySymbol } from './lib/calc'
 import { ACCENTS, type AccentKey } from './lib/accents'
 import { TRANSLATIONS, type Lang } from './lib/i18n'
@@ -77,6 +78,7 @@ function App() {
       <FinalPrice acc={acc} price={result.finalPrice} t={t} currency={currency} />
 
       <Footer t={t} onReset={reset} />
+      <Analytics />
     </div>
   )
 }
