@@ -34,6 +34,7 @@ export interface Translations {
   copiedBtn: string
   resetBtn: string
   footerTag: string
+  creditPrefix: string
   madeWith: string
   by: string
 }
@@ -72,6 +73,7 @@ const ES: Translations = {
   copiedBtn: '✓ COPIADO AL PORTAPAPELES',
   resetBtn: '↻ RESET',
   footerTag: 'NO BACKEND · NO TRACKING · NO BS',
+  creditPrefix: 'Hecho con cariño por',
   madeWith: 'Hecho con cariño',
   by: 'MabarcoDev',
 }
@@ -110,6 +112,7 @@ const EN: Translations = {
   copiedBtn: '✓ COPIED TO CLIPBOARD',
   resetBtn: '↻ RESET',
   footerTag: 'NO BACKEND · NO TRACKING · NO BS',
+  creditPrefix: 'Made with love by',
   madeWith: 'Made with love',
   by: 'MabarcoDev',
 }

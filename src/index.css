@@ -102,6 +102,86 @@ input[type="number"] { -moz-appearance: textfield; }
   min-width: 0;
 }
 
+.brand-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 6px 0 38px;
+  color: #d4d4d4;
+}
+
+.brand-credit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: 0.22em;
+  text-align: center;
+}
+
+.brand-logo-link {
+  color: #fafafa;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.brand-logo-link:hover,
+.brand-logo-link:focus-visible {
+  color: #d4ff00;
+  transform: translateY(-1px);
+}
+
+.brand-logo {
+  display: block;
+  width: 44px;
+  height: 26px;
+  background: currentColor;
+  mask: url('/mabarcodev-logo.svg') center / contain no-repeat;
+  -webkit-mask: url('/mabarcodev-logo.svg') center / contain no-repeat;
+}
+
+.brand-name,
+.brand-links a {
+  color: #fafafa;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.brand-name {
+  font-weight: 700;
+}
+
+.brand-name:hover,
+.brand-name:focus-visible,
+.brand-links a:hover,
+.brand-links a:focus-visible {
+  color: #d4ff00;
+}
+
+.brand-links {
+  width: min(100%, 420px);
+  border-top: 1px solid #262626;
+  padding-top: 22px;
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+}
+
+.brand-links span {
+  color: #737373;
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -148,6 +228,23 @@ input[type="number"] { -moz-appearance: textfield; }
 
   .presets-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .brand-credit {
+    gap: 12px;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+  }
+
+  .brand-logo {
+    width: 36px;
+    height: 22px;
+  }
+
+  .brand-links {
+    gap: 14px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
   }
 }
 
