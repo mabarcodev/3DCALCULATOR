@@ -1,52 +1,83 @@
-# 3D CALC
+# 3D Calculador
 
-> Calcula el precio justo de tus impresiones 3D. Sin backend. Sin tracking. Sin BS.
+> Calcula el precio justo de tus impresiones 3D. Sin backend. Sin tracking. Sin registros.
 
 ![3D CALC screenshot](./docs/screenshot.png)
 
----
+## Que Es
 
-## ¿Qué es?
+Una calculadora web para makers y negocios de impresion 3D que necesitan poner precio a sus trabajos sin adivinar.
 
-Una calculadora web para makers y negocios de impresión 3D que necesitan poner precio a sus trabajos sin adivinar.
+Introduces tus costes reales: material, peso, tiempo de maquina, mano de obra, desperdicio y margen. La app calcula el precio final y muestra un desglose claro de cada partida. Todo ocurre en el navegador.
 
-Introduces tus costes reales — material, máquina, mano de obra — y te devuelve el precio final con un desglose honesto. Todo ocurre en tu navegador. No hay servidor, no hay login, no hay nada que instalar.
-
-**Fórmula:**
+```txt
+Precio final = material + desperdicio + maquina + mano de obra + margen
 ```
-Precio = (Material + Desperdicio + Máquina + M. obra) × (1 + Margen%)
-```
-
----
 
 ## Demo
 
-🔗 **[3dcalcalculador](https://3dcalculador.vercel.app)**
+[3dcalculador.vercel.app](https://3dcalculador.vercel.app/)
 
----
+## Caracteristicas
 
-## Características
+- Presets rapidos para PLA, PETG, ABS y resina.
+- Desglose visual de material, desperdicio, maquina y mano de obra.
+- Precio final animado que se actualiza en tiempo real.
+- Selector de divisa EUR/USD.
+- Interfaz en espanol e ingles.
+- Validacion de entradas para evitar `NaN`, `Infinity` y valores negativos.
+- Soporte para coma decimal y punto decimal.
+- SEO basico: title, description, canonical, Open Graph, robots y sitemap.
+- Headers basicos de seguridad en Vercel.
 
-- Presets rápidos para PLA, PETG, ABS y Resina
-- Desglose visual de cada coste con barras proporcionales
-- Precio final animado que se actualiza en tiempo real
-- Selector de divisa `€ / $`
-- Interfaz en español e inglés
-- 5 temas de color
-- 100% offline — funciona sin conexión una vez cargado
-
----
-
-## Uso local
+## Uso Local
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abre [http://localhost:5173](http://localhost:5173)
+Abre [http://localhost:5173](http://localhost:5173).
 
----
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm test
+npm run test:coverage
+npm run preview
+```
+
+Los tests usan el runner nativo de Node para no anadir dependencias extra a una app pequena.
+
+## Estructura
+
+```txt
+src/
+  components/   Componentes visuales de la calculadora
+  hooks/        Hooks de interfaz
+  lib/          Logica de calculo, formatos, traducciones y acentos
+test/           Tests unitarios de la logica critica
+public/         favicon, robots, sitemap y assets publicos
+docs/           Imagen explicativa del proyecto
+```
+
+## Testing
+
+La logica critica esta cubierta con tests unitarios:
+
+- Formula principal de precio.
+- Desglose de costes.
+- Sanitizacion de valores invalidos.
+- Parseo de coma decimal y punto decimal.
+- Formato de importes.
+
+Ejecuta:
+
+```bash
+npm run test:coverage
+```
 
 ## Deploy
 
@@ -56,23 +87,20 @@ El proyecto incluye `vercel.json` preconfigurado.
 vercel
 ```
 
-O conecta el repo directamente en [vercel.com/new](https://vercel.com/new) y cada push hace deploy automático.
+Tambien puedes conectar el repo en [vercel.com/new](https://vercel.com/new). Cada push a la rama configurada puede desplegar automaticamente.
 
----
+Si en el futuro usas dominio propio, actualiza:
+
+- `index.html`: canonical y Open Graph URL.
+- `public/robots.txt`: URL del sitemap.
+- `public/sitemap.xml`: URL publica principal.
 
 ## Stack
 
-React 18 · TypeScript · Vite · CSS inline
+React 18, TypeScript, Vite y CSS.
 
-Sin librerías de UI. Sin Tailwind. Sin dependencias de estilos.
+Sin backend, sin base de datos y sin librerias de UI.
 
 ---
 
-<div align="center">
-
-Hecho con cariño por **[MabarcoDev](https://github.com/mabarcodev)**
-
-[![Instagram](https://img.shields.io/badge/@mabarcodev-E4405F?style=flat&logo=instagram&logoColor=white)](https://www.instagram.com/mabarcodev)
-[![GitHub](https://img.shields.io/badge/mabarcodev-181717?style=flat&logo=github&logoColor=white)](https://github.com/mabarcodev)
-
-</div>
+Hecho con carino por [MabarcoDev](https://github.com/mabarcodev).

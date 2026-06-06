@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ACCENTS, type AccentKey } from '../lib/accents'
 import type { Lang, Translations } from '../lib/i18n'
 import type { CurrencySymbol } from '../lib/calc'
 
-const MONO    = "'JetBrains Mono', ui-monospace, monospace"
+const MONO = "'JetBrains Mono', ui-monospace, monospace"
 const DISPLAY = "'Archivo Black', 'Space Grotesk', sans-serif"
 
 interface HeaderProps {
@@ -28,11 +28,11 @@ export function Header({ acc, accent, onAccentChange, lang, onLangChange, curren
   }, [])
 
   const Controls = () => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-      {/* Toggle idioma */}
-      <div style={{ display: 'flex', border: '2px solid #333', overflow: 'hidden' }}>
-        {(['es', 'en']).map((l, i) => (
-          <button key={l} type="button" onClick={() => onLangChange(l as Lang)}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }} aria-label="Preferencias">
+      <div style={{ display: 'flex', border: '2px solid #333', overflow: 'hidden' }} aria-label="Idioma">
+        {(['es', 'en'] as Lang[]).map((l, i) => (
+          <button key={l} type="button" onClick={() => onLangChange(l)}
+            aria-pressed={lang === l}
             style={{
               fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: '0.15em',
               padding: '4px 8px',
@@ -45,10 +45,10 @@ export function Header({ acc, accent, onAccentChange, lang, onLangChange, curren
         ))}
       </div>
 
-      {/* Toggle divisa */}
-      <div style={{ display: 'flex', border: '2px solid #333', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', border: '2px solid #333', overflow: 'hidden' }} aria-label="Divisa">
         {(['€', '$'] as CurrencySymbol[]).map((c, i) => (
           <button key={c} type="button" onClick={() => onCurrencyChange(c)}
+            aria-pressed={currency === c}
             style={{
               fontFamily: MONO, fontSize: 11, fontWeight: 700, letterSpacing: '0.05em',
               padding: '4px 8px',
@@ -61,10 +61,9 @@ export function Header({ acc, accent, onAccentChange, lang, onLangChange, curren
         ))}
       </div>
 
-      {/* Puntos de color */}
-      <div style={{ display: 'flex', gap: 6 }}>
+      <div style={{ display: 'flex', gap: 6 }} aria-label="Color de acento">
         {(Object.entries(ACCENTS) as [AccentKey, typeof ACCENTS[AccentKey]][]).map(([k, v]) => (
-          <button key={k} type="button" onClick={() => onAccentChange(k)} aria-label={v.name}
+          <button key={k} type="button" onClick={() => onAccentChange(k)} aria-label={v.name} aria-pressed={accent === k}
             style={{
               width: 22, height: 22, padding: 0,
               background: v.c,
@@ -79,8 +78,7 @@ export function Header({ acc, accent, onAccentChange, lang, onLangChange, curren
   )
 
   return (
-    <div style={{ border: '2px solid #fafafa', marginBottom: 16 }}>
-      {/* Barra superior */}
+    <header style={{ border: '2px solid #fafafa', marginBottom: 16 }}>
       <div style={{
         display: 'flex', justifyContent: 'space-between',
         padding: '6px 14px',
@@ -89,23 +87,21 @@ export function Header({ acc, accent, onAccentChange, lang, onLangChange, curren
         fontFamily: MONO,
       }}>
         <span>● ONLINE</span>
-        <span>v1.0</span>
+        <span>v1.1</span>
         <span>{new Date().toISOString().slice(0, 10)}</span>
       </div>
 
       <div style={{ padding: '28px 18px 22px', position: 'relative' }}>
-        {/* Controles en desktop: absolute top-right */}
         {!mobile && (
           <div style={{ position: 'absolute', top: 18, right: 18 }}>
             <Controls />
           </div>
         )}
 
-        <h1 style={{
+        <h1 className="hero-title" style={{
           fontFamily: DISPLAY,
-          fontSize: 'clamp(48px, 11vw, 110px)',
           lineHeight: 0.85,
-          letterSpacing: '-0.05em',
+          letterSpacing: 0,
           margin: 0,
           fontWeight: 900,
         }}>
@@ -122,13 +118,12 @@ export function Header({ acc, accent, onAccentChange, lang, onLangChange, curren
           {t.subheadline}
         </p>
 
-        {/* Controles en móvil: debajo del texto */}
         {mobile && (
           <div style={{ marginTop: 18 }}>
             <Controls />
           </div>
         )}
       </div>
-    </div>
+    </header>
   )
 }

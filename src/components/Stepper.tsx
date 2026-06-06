@@ -1,4 +1,5 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useId, useState, type CSSProperties } from 'react'
+import { fmt2, parseDecimalInput, toNonNegativeNumber } from '../lib/calc'
 
 const MONO = "'JetBrains Mono', ui-monospace, monospace"
 const DISPLAY = "'Archivo Black', 'Space Grotesk', sans-serif"
@@ -6,12 +7,33 @@ const DISPLAY = "'Archivo Black', 'Space Grotesk', sans-serif"
 interface StepperProps {
   value: number
   step: number
+  label: string
   onChange: (v: number) => void
 }
 
-export function Stepper({ value, step, onChange }: StepperProps) {
+const displayValue = (value: number) => fmt2(value).replace(/,00$/, '')
+
+export function Stepper({ value, step, label, onChange }: StepperProps) {
+  const [draft, setDraft] = useState(displayValue(value))
+
+  useEffect(() => {
+    setDraft(displayValue(value))
+  }, [value])
+
   const change = (delta: number) =>
-    onChange(Math.max(0, Math.round((value + delta) * 100) / 100))
+    onChange(Math.round(toNonNegativeNumber(value + delta) * 100) / 100)
+
+  const commitDraft = () => {
+    const parsed = parseDecimalInput(draft)
+    if (parsed === null) {
+      setDraft(displayValue(value))
+      return
+    }
+
+    const nextValue = Math.round(toNonNegativeNumber(parsed) * 100) / 100
+    onChange(nextValue)
+    setDraft(displayValue(nextValue))
+  }
 
   const btnStyle = (side: 'left' | 'right') => ({
     width: 44, height: 44,
@@ -29,10 +51,18 @@ export function Stepper({ value, step, onChange }: StepperProps) {
 
   return (
     <div style={{ display: 'flex', border: '2px solid #fafafa' }}>
-      <button type="button" onClick={() => change(-step)} style={btnStyle('left')}>−</button>
+      <button type="button" onClick={() => change(-step)} style={btnStyle('left')} aria-label={`Reducir ${label}`}>−</button>
       <input
-        type="number" step={step} value={value}
-        onChange={(e) => onChange(Math.max(0, Number(e.target.value) || 0))}
+        type="text"
+        inputMode="decimal"
+        aria-label={label}
+        value={draft}
+        onChange={(e) => {
+          setDraft(e.target.value)
+          const parsed = parseDecimalInput(e.target.value)
+          if (parsed !== null) onChange(Math.round(toNonNegativeNumber(parsed) * 100) / 100)
+        }}
+        onBlur={commitDraft}
         style={{
           width: 90, height: 44,
           background: '#0a0a0a',
@@ -44,7 +74,7 @@ export function Stepper({ value, step, onChange }: StepperProps) {
           outline: 'none',
         }}
       />
-      <button type="button" onClick={() => change(step)} style={btnStyle('right')}>+</button>
+      <button type="button" onClick={() => change(step)} style={btnStyle('right')} aria-label={`Aumentar ${label}`}>+</button>
     </div>
   )
 }
@@ -58,20 +88,54 @@ interface LabelInputProps {
 }
 
 export function LabelInput({ acc, label, value, step, onChange }: LabelInputProps) {
+  const id = useId()
+  const [draft, setDraft] = useState(displayValue(value))
+
+  useEffect(() => {
+    setDraft(displayValue(value))
+  }, [value])
+
+  const commitDraft = () => {
+    const parsed = parseDecimalInput(draft)
+    if (parsed === null) {
+      setDraft(displayValue(value))
+      return
+    }
+
+    const nextValue = Math.round(toNonNegativeNumber(parsed) / step) * step
+    const rounded = Math.round(nextValue * 100) / 100
+    onChange(rounded)
+    setDraft(displayValue(rounded))
+  }
+
   return (
     <div>
-      <div style={{
-        fontFamily: MONO,
-        fontSize: 10, letterSpacing: '0.25em',
-        color: '#a3a3a3', marginBottom: 4, fontWeight: 700,
-      }}>
+      <label
+        htmlFor={id}
+        style={{
+          display: 'block',
+          fontFamily: MONO,
+          fontSize: 10, letterSpacing: '0.25em',
+          color: '#a3a3a3', marginBottom: 4, fontWeight: 700,
+        }}
+      >
         {label}
-      </div>
+      </label>
       <input
-        type="number" step={step} value={value}
-        onChange={(e) => onChange(Math.max(0, Number(e.target.value) || 0))}
+        id={id}
+        type="text"
+        inputMode="decimal"
+        value={draft}
+        onChange={(e) => {
+          setDraft(e.target.value)
+          const parsed = parseDecimalInput(e.target.value)
+          if (parsed !== null) onChange(toNonNegativeNumber(parsed))
+        }}
+        onBlur={(e) => {
+          e.target.style.borderColor = '#fafafa'
+          commitDraft()
+        }}
         onFocus={(e) => (e.target.style.borderColor = acc)}
-        onBlur={(e) => (e.target.style.borderColor = '#fafafa')}
         style={{
           width: '100%', padding: '10px',
           background: '#0a0a0a',

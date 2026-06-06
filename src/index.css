@@ -7,10 +7,100 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+button, input { font: inherit; }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 input[type="number"] { -moz-appearance: textfield; }
 ::selection { background: var(--acc, #d4ff00); color: #0a0a0a; }
+
+.app-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px 20px 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hero-title {
+  font-size: 96px;
+}
+
+.metric-value {
+  font-size: 76px;
+}
+
+.metric-unit {
+  font-size: 28px;
+}
+
+.final-price-value {
+  font-size: 156px;
+}
+
+.cost-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.breakdown-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 120px) 1fr 90px;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.seo-content {
+  border-top: 2px solid #1a1a1a;
+  margin-top: 28px;
+  padding: 28px 0 8px;
+  color: #d4d4d4;
+  line-height: 1.7;
+}
+
+.seo-content h2,
+.seo-content h3 {
+  color: #fafafa;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.seo-content h2 {
+  font-family: 'Archivo Black', 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  margin: 0 0 12px;
+}
+
+.seo-content h3 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.seo-content p {
+  margin: 0 0 16px;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px;
+  margin: 20px 0 8px;
+}
+
+.seo-grid article {
+  min-width: 0;
+}
 
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -20,4 +110,57 @@ input[type="number"] { -moz-appearance: textfield; }
   display: inline-block;
   white-space: nowrap;
   animation: marquee 40s linear infinite;
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    padding: 14px 12px 0;
+  }
+
+  .hero-title {
+    font-size: 56px;
+  }
+
+  .metric-value {
+    font-size: 50px;
+  }
+
+  .metric-unit {
+    font-size: 22px;
+  }
+
+  .final-price-value {
+    font-size: 84px;
+  }
+
+  .cost-grid,
+  .seo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .breakdown-row {
+    grid-template-columns: 1fr;
+  }
+
+  .breakdown-row > span {
+    text-align: left !important;
+  }
+
+  .presets-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-title {
+    font-size: 46px;
+  }
+
+  .metric-value {
+    font-size: 42px;
+  }
+
+  .final-price-value {
+    font-size: 68px;
+  }
 }

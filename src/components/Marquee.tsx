@@ -4,7 +4,7 @@ interface MarqueeProps { acc: string; t: Translations }
 
 export function Marquee({ acc, t }: MarqueeProps) {
   return (
-    <div style={{
+    <div aria-hidden="true" style={{
       overflow: 'hidden',
       borderTop: '2px solid #fafafa', borderBottom: '2px solid #fafafa',
       padding: '6px 0', marginBottom: 18,

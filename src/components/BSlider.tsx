@@ -1,4 +1,6 @@
+import { useId } from 'react'
 import { Block, Hint } from './Block'
+import { toNonNegativeNumber } from '../lib/calc'
 
 interface BSliderProps {
   acc: string
@@ -19,7 +21,9 @@ export function BSlider({
   acc, num, label, value, onChange, min, max, step, unit,
   format = (v) => v, secondary, hint,
 }: BSliderProps) {
-  const pct = ((value - min) / (max - min)) * 100
+  const id = useId()
+  const safeValue = toNonNegativeNumber(value)
+  const pct = Math.min(100, Math.max(0, ((safeValue - min) / (max - min)) * 100))
 
   return (
     <Block
@@ -28,23 +32,22 @@ export function BSlider({
       right={<span style={{ color: acc }}>[{min} ↔ {max}{unit}]</span>}
     >
       <div style={{ padding: '20px 20px 14px' }}>
+        <label htmlFor={id} className="sr-only">{label}</label>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 14 }}>
-          <span style={{
+          <span className="metric-value" style={{
             fontFamily: "'Archivo Black', 'Space Grotesk', sans-serif",
-            fontSize: 'clamp(48px, 8vw, 76px)',
             fontWeight: 900,
             lineHeight: 0.85,
-            letterSpacing: '-0.04em',
+            letterSpacing: 0,
             fontVariantNumeric: 'tabular-nums',
           }}>
-            {format(value)}
+            {format(safeValue)}
           </span>
-          <span style={{
+          <span className="metric-unit" style={{
             fontFamily: "'Archivo Black', 'Space Grotesk', sans-serif",
-            fontSize: 'clamp(20px, 3vw, 28px)',
             fontWeight: 900,
             color: acc,
-            letterSpacing: '-0.02em',
+            letterSpacing: 0,
           }}>
             {unit}
           </span>
@@ -61,7 +64,6 @@ export function BSlider({
           )}
         </div>
 
-        {/* Track */}
         <div style={{ position: 'relative', height: 36 }}>
           <div style={{
             position: 'absolute',
@@ -77,17 +79,19 @@ export function BSlider({
             transition: 'width 0.08s',
           }} />
           <input
+            id={id}
             type="range"
-            value={value} min={min} max={max} step={step}
+            value={safeValue}
+            min={min}
+            max={max}
+            step={step}
             onChange={(e) => onChange(Number(e.target.value))}
-            aria-label={label}
             style={{
               position: 'absolute', inset: 0,
               width: '100%', height: 36,
               opacity: 0, cursor: 'ew-resize', margin: 0,
             }}
           />
-          {/* Thumb */}
           <div style={{
             position: 'absolute',
             top: 4,

@@ -28,13 +28,23 @@ interface BlockProps {
 
 export function Block({ num, title, right, children }: BlockProps) {
   return (
-    <div style={S.wrap}>
+    <section style={S.wrap} aria-labelledby={`section-${num}-${title}`.replace(/[^a-zA-Z0-9-]/g, '-')}>
       <div style={S.header}>
-        <span>{num} / {title}</span>
+        <h2
+          id={`section-${num}-${title}`.replace(/[^a-zA-Z0-9-]/g, '-')}
+          style={{
+            margin: 0,
+            font: 'inherit',
+            letterSpacing: 'inherit',
+            textTransform: 'inherit',
+          }}
+        >
+          {num} / {title}
+        </h2>
         <span>{right}</span>
       </div>
       {children}
-    </div>
+    </section>
   )
 }
 
