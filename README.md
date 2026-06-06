@@ -103,4 +103,4 @@ Sin backend, sin base de datos y sin librerias de UI.
 
 ---
 
-Hecho con carino por [MabarcoDev](https://github.com/mabarcodev).
+Hecho con cariño ❤️ - [MabarcoDev](https://www.mabarcodev.com).
