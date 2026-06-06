@@ -15,10 +15,15 @@ import { SeoContent } from './components/SeoContent'
 import { Footer } from './components/Footer'
 
 const DISPLAY = "'Archivo Black', 'Space Grotesk', sans-serif"
+const ACCENT_KEYS = Object.keys(ACCENTS) as AccentKey[]
+
+function getRandomAccent(): AccentKey {
+  return ACCENT_KEYS[Math.floor(Math.random() * ACCENT_KEYS.length)] ?? 'lime'
+}
 
 function App() {
   const [inputs, setInputs] = useState<CalcInputs>(DEFAULTS)
-  const [accent, setAccent] = useState<AccentKey>('lime')
+  const [accent, setAccent] = useState<AccentKey>(getRandomAccent)
   const [activePreset, setActivePreset] = useState<string | null>(null)
   const [lang, setLang] = useState<Lang>('es')
   const [currency, setCurrency] = useState<CurrencySymbol>('€')
